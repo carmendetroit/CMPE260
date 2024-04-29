@@ -7,11 +7,20 @@
 :- ['cmpefarm.pro'].
 :- init_from_map.
 
-% 1- agents_distance(+Agent1, +Agent2, -Distance)
+agents_distance(Agent1,Agent2, Distance) :-
 
+    get_dict(x, Agent1, X1),
+    get_dict(y, Agent1, Y1),
+    get_dict(x, Agent2, X2),
+    get_dict(y, Agent2, Y2),
+    Distance is abs(X1-X2)+abs(Y1-Y2).
 
-% 2- number_of_agents(+State, -NumberOfAgents)
-
+number_of_agents([Agents, _, _, _], NumberOfAgents) :-
+    set_prolog_flag(toplevel_print_anon, false),
+    is_dict(Agents),          % Check if Agents is a dictionary
+    dict_keys(Agents, Keys),  % Get all the keys from the Agents dictionary
+    length(Keys, NumberOfAgents).  % Count the number of keys, which represents the number of agents
+    
 % 3- value_of_farm(+State, -Value)
 
 % 4- find_food_coordinates(+State, +AgentId, -Coordinates)
